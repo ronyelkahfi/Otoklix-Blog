@@ -18,14 +18,16 @@ type ConfigDB struct {
 }
 
 func (config *ConfigDB) ConnectDB() *gorm.DB {
-	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=disable TimeZone=Asia/Jakarta",
+		config.DB_Host,
 		config.DB_Username,
 		config.DB_Password,
-		config.DB_Host,
+		config.DB_Database,
 		config.DB_Port,
-		config.DB_Database)
+	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,6 +37,6 @@ func (config *ConfigDB) ConnectDB() *gorm.DB {
 
 func DBMigrate(db *gorm.DB) {
 	db.AutoMigrate(
-		&_blogDb.Blog{},
+		&_blogDb.Blogs{},
 	)
 }

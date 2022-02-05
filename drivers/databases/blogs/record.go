@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Blog struct {
+type Blogs struct {
 	Id          uint   `gorm:"primarykey;autoIncrement"`
 	Title       string `gorm:"size:100"`
 	Content     string `gorm:"type:text"`
@@ -14,7 +14,7 @@ type Blog struct {
 	UpdatedAt   time.Time
 }
 
-func ToDomain(data Blog) _blogDomain.Domain {
+func ToDomain(data Blogs) _blogDomain.Domain {
 	return _blogDomain.Domain{
 		Id:           data.Id,
 		Title:        data.Title,
@@ -23,7 +23,7 @@ func ToDomain(data Blog) _blogDomain.Domain {
 	}
 }
 
-func ToListDomain(data []Blog) []_blogDomain.Domain {
+func ToListDomain(data []Blogs) []_blogDomain.Domain {
 	var output []_blogDomain.Domain
 	for _, row := range data {
 		output = append(output, ToDomain(row))
