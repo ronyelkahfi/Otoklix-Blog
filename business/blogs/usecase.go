@@ -11,7 +11,7 @@ type BlogUsecase struct {
 }
 
 func NewUseCase(repo Repository, timeout time.Duration) Usecase {
-	return BlogUsecase{
+	return &BlogUsecase{
 		ContextTimeout: timeout,
 		Repository:     repo,
 	}
@@ -20,7 +20,9 @@ func NewUseCase(repo Repository, timeout time.Duration) Usecase {
 func (uc *BlogUsecase) GetPosts(ctx context.Context) ([]Domain, error) {
 	return uc.Repository.GetData(ctx)
 }
-
+func (uc *BlogUsecase) ShowPost(ctx context.Context, id uint) (Domain, error) {
+	return uc.Repository.GetById(ctx, id)
+}
 func (uc *BlogUsecase) CreatePost(ctx context.Context, data Domain) (Domain, error) {
 	return uc.Repository.Create(ctx, data)
 }
