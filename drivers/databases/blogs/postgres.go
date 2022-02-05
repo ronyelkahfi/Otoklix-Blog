@@ -53,7 +53,13 @@ func (repo *BlogRepository) Update(ctx context.Context, data _blogDomain.Domain)
 	// 	return _blogDomain.Domain{}, result.Error
 	// }
 	repo.db.Find(&blog, data.Id)
-	return ToDomain(blog), nil
+	returndata := blog
+	blog.Title = data.Title
+	blog.Content = data.Content
+	blog.PublishedAt = data.Published_at
+	repo.db.Save(&blog)
+
+	return ToDomain(returndata), nil
 }
 func (repo *BlogRepository) Delete(ctx context.Context, id uint) (_blogDomain.Domain, error) {
 	var blog _blogDomain.Domain
