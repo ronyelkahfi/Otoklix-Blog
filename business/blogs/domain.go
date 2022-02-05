@@ -10,6 +10,8 @@ type Domain struct {
 	Title        string
 	Content      string
 	Published_at time.Time
+	Created_at   time.Time
+	Updated_at   time.Time
 }
 
 type Usecase interface {
