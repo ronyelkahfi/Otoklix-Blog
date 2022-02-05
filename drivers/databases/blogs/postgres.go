@@ -62,11 +62,11 @@ func (repo *BlogRepository) Update(ctx context.Context, data _blogDomain.Domain)
 	return ToDomain(returndata), nil
 }
 func (repo *BlogRepository) Delete(ctx context.Context, id uint) (_blogDomain.Domain, error) {
-	var blog _blogDomain.Domain
+	var blog Blogs
 	repo.db.Find(&blog, id)
-	result := repo.db.Delete(&_blogDomain.Domain{}, id)
+	result := repo.db.Delete(&blog, id)
 	if result.Error != nil {
 		return _blogDomain.Domain{}, result.Error
 	}
-	return blog, nil
+	return ToDomain(blog), nil
 }
